@@ -12,7 +12,7 @@ class HandleInertiaResponse
 {
     private Request $request;
 
-    private Response|JsonResponse $response;
+    private Response $response;
 
     /**
      * Handle an incoming request.
