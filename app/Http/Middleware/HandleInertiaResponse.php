@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
@@ -18,7 +19,7 @@ class HandleInertiaResponse
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next): Response|JsonResponse
     {
         $this->request = $request;
 
