@@ -6,16 +6,14 @@ use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
-use Symfony\Component\HttpFoundation\Response;
-
 use Illuminate\View\View;
-use Inertia\Response as InertiaResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class HandleInertiaResponse
 {
     private Request $request;
 
-    private Response | JsonResponse $response;
+    private Response|JsonResponse $response;
 
     /**
      * Handle an incoming request.
@@ -65,7 +63,7 @@ class HandleInertiaResponse
 
     private function isInitialInertiaResponse(): bool
     {
-        if (!$this->response instanceof JsonResponse && !$this->response instanceof HttpResponse) {
+        if (! $this->response instanceof JsonResponse && ! $this->response instanceof HttpResponse) {
             return false;
         }
 
@@ -83,7 +81,7 @@ class HandleInertiaResponse
 
     private function getInertiaProperties(): mixed
     {
-        if (!$this->response instanceof JsonResponse && !$this->response instanceof HttpResponse) {
+        if (! $this->response instanceof JsonResponse && ! $this->response instanceof HttpResponse) {
             return null;
         }
 
