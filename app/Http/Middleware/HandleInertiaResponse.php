@@ -5,28 +5,31 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Http\Response as HttpResponse;
+use Symfony\Component\HttpFoundation\Response;
+
 use Illuminate\View\View;
+use Inertia\Response as InertiaResponse;
 
 class HandleInertiaResponse
 {
     private Request $request;
 
-    private Response $response;
+    private Response | JsonResponse $response;
 
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response)  $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response|JsonResponse
+    public function handle(Request $request, Closure $next): Response
     {
         $this->request = $request;
 
         $this->response = $next($this->request);
 
         if (! $this->isInitialInertiaResponse() && ! $this->isInertiaResponse()) {
-            return $next($this->request);
+            return $this->response;
         }
 
         $inertiaProperties = $this->getInertiaProperties();
@@ -62,6 +65,10 @@ class HandleInertiaResponse
 
     private function isInitialInertiaResponse(): bool
     {
+        if (!$this->response instanceof JsonResponse && !$this->response instanceof HttpResponse) {
+            return false;
+        }
+
         if (! $this->response->getOriginalContent() instanceof View) {
             return false;
         }
@@ -76,6 +83,10 @@ class HandleInertiaResponse
 
     private function getInertiaProperties(): mixed
     {
+        if (!$this->response instanceof JsonResponse && !$this->response instanceof HttpResponse) {
+            return null;
+        }
+
         $originalContent = $this->response->getOriginalContent();
 
         if ($originalContent instanceof View) {

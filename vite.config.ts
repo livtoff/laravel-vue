@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 import autoimport from "unplugin-auto-import/vite";
 import components from "unplugin-vue-components/vite";
 import { run } from "vite-plugin-run";
+import { aliasLocalPackage } from "./aliasLocalPackage";
 
 export default defineConfig({
     plugins: [
@@ -53,14 +54,13 @@ export default defineConfig({
                     "@inertiajs/vue3": ["router", "useForm", "usePage", "Link"],
                 },
             ],
-
             dirs: [
                 "./resources/js",
                 "./resources/js/actions/App/Http/Controllers/index.ts",
             ],
         }),
         components({
-            dirs: ["resources/js"],
+            dirs: ["resources/js/components", "resources/js/layouts"],
             dts: "resources/js/types/components.d.ts",
             resolvers: [
                 (name: string) => {
@@ -76,4 +76,24 @@ export default defineConfig({
             ],
         }),
     ],
+    resolve: {
+        dedupe: ["@inertiajs/vue3"],
+        alias: aliasLocalPackage([
+            // {
+            //     regex: /^@\/components\/UserInfo(?:\.vue)?$/,
+            //     replacement: "./resources/js/components/UserInfo.vue",
+            // },
+            {
+                regex: /^@\//,
+                replacement: "@/",
+                folderName: "livtoff/ui",
+                localPath: "./resources/js",
+                externalPath: "../ui/src",
+            },
+            {
+                regex: /^@livtoff\/ui/,
+                replacement: "../ui/index.ts",
+            },
+        ]),
+    },
 });
