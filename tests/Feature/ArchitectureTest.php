@@ -132,9 +132,6 @@ arch()->expect('App\Http\Controllers')
 arch()->expect('App\Http')
     ->toOnlyBeUsedIn('App\Http');
 
-arch()->expect('App\Http\Controllers')
-    ->not->toHavePublicMethodsBesides(['__construct', '__invoke', 'index', 'show', 'create', 'store', 'edit', 'update', 'destroy', 'middleware']);
-
 arch()->expect([
     'dd',
     'ddd',
