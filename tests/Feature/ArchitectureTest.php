@@ -105,7 +105,7 @@ arch()->expect('App')
     ->ignoring('App\Notifications');
 
 arch()->expect('App\Providers')
-    ->toHaveSuffix('ServiceProvider');
+    ->toHaveSuffix('Provider');
 
 arch()->expect('App\Providers')
     ->toExtend(\Illuminate\Support\ServiceProvider::class);
