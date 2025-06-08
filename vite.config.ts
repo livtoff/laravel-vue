@@ -88,11 +88,11 @@ export default defineConfig({
                 replacement: "@/",
                 folderName: "livtoff/ui",
                 localPath: "./resources/js",
-                externalPath: "../ui/src",
+                externalPath: "../livtoff/ui/src",
             },
             {
                 regex: /^@livtoff\/ui/,
-                replacement: "../ui/index.ts",
+                replacement: "../ui/livtoff/index.ts",
             },
         ]),
     },

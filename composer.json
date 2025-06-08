@@ -10,15 +10,15 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../../packages/route-maker"
+            "url": "../packages/route-maker"
         },
         {
             "type": "path",
-            "url": "../laravel"
+            "url": "../livtoff/laravel"
         },
         {
             "type": "path",
-            "url": "../../packages/laravel-telescope-toolbar"
+            "url": "../packages/laravel-telescope-toolbar"
         }
     ],
     "license": "MIT",

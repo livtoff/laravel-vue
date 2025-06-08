@@ -18,7 +18,7 @@ class Development implements Preset
         if (app()->isLocal()) {
             // Allow Vite to connect to the development server
             $policy
-                ->add(Directive::CONNECT, ['wss://'.$appDomain.':5173']);
+                ->add(Directive::CONNECT, ['wss://'.$appDomain.':*']);
         }
     }
 }
