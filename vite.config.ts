@@ -1,4 +1,3 @@
-import path from "path";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import laravel from "laravel-vite-plugin";
@@ -88,11 +87,11 @@ export default defineConfig({
                 replacement: "@/",
                 folderName: "livtoff/ui",
                 localPath: "./resources/js",
-                externalPath: "../livtoff/ui/src",
+                externalPath: "../ui/src",
             },
             {
                 regex: /^@livtoff\/ui/,
-                replacement: "../ui/livtoff/index.ts",
+                replacement: "../ui/index.ts",
             },
         ]),
     },
