@@ -38,7 +38,15 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            //
+            'app' => [
+                'name' => config('app.name'),
+                'timezone' => config('app.timezone'),
+                'locale' => config('app.locale'),
+            ],
+            'location' => [
+                'current' => $request->url(),
+                'previous' => $request->headers->get('referer'),
+            ],
         ]);
     }
 }
