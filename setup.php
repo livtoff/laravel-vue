@@ -10,7 +10,7 @@
  * - Updates DB_DATABASE in .env with a smart default based on folder name
  * - Runs php artisan key:generate
  * - Runs composer install
- * - Runs npm install
+ * - Runs bun install
  * - Optionally deletes itself after completion
  */
 
@@ -21,14 +21,14 @@ $setupSteps = [
     'updateAppUrl',
     'updateDbName',
     'installComposerDependencies',
-    'installNpmDependencies',
+    'installNodeDependencies',
     'generateAppKey',
     'setupWhiskey',
     'runMigrations',
     'secureHerd',
     'askDeleteScript',
     'openInBrowser',
-    'startNpmDev',
+    'startBunDev',
 ];
 
 // Helper function to get the root folder name
@@ -259,18 +259,18 @@ function installComposerDependencies($envContent, $updated)
     return [$envContent, $updated];
 }
 
-// Run npm install
-function installNpmDependencies($envContent, $updated)
+// Run bun install
+function installNodeDependencies($envContent, $updated)
 {
-    echo "📦 Installing Node.js dependencies with npm...\n";
+    echo "📦 Installing Node.js dependencies with bun...\n";
     $output = [];
     $returnVar = 0;
-    exec('npm install', $output, $returnVar);
+    exec('bun install', $output, $returnVar);
 
     if ($returnVar === 0) {
-        echo "✅ npm dependencies installed successfully.\n\n";
+        echo "✅ node dependencies installed successfully.\n\n";
     } else {
-        echo "❌ Failed to install npm dependencies.\n";
+        echo "❌ Failed to install node dependencies.\n";
         foreach ($output as $line) {
             echo "   $line\n";
         }
@@ -357,6 +357,31 @@ function secureHerd($envContent, $updated)
     return [$envContent, $updated];
 }
 
+// Link Herd
+function linkHerd($envContent, $updated)
+{
+    echo "🔒 Linking site with Herd...\n";
+    $output = [];
+    $returnVar = 0;
+    exec('herd link', $output, $returnVar);
+
+    if ($returnVar === 0) {
+        echo "✅ Site linked with Herd successfully.\n";
+        foreach ($output as $line) {
+            echo "   $line\n";
+        }
+        echo "\n";
+    } else {
+        echo "❌ Failed to secure site with Herd.\n";
+        foreach ($output as $line) {
+            echo "   $line\n";
+        }
+        echo "\n";
+    }
+
+    return [$envContent, $updated];
+}
+
 // Open in browser
 function openInBrowser($envContent, $updated)
 {
@@ -418,14 +443,14 @@ function askDeleteScript($envContent, $updated)
     return [$envContent, $updated];
 }
 
-// Start npm run dev
-function startNpmDev($envContent, $updated)
+// Start bun run dev
+function startBunDev($envContent, $updated)
 {
-    echo "🚀 Starting npm development server...\n";
-    echo "✅ Running 'npm run dev' in the terminal...\n";
+    echo "🚀 Starting bun development server...\n";
+    echo "✅ Running 'bun run dev' in the terminal...\n";
 
     // Pass control to npm run dev in the terminal
-    passthru('npm run dev');
+    passthru('bun run dev');
 
     // Note: The script will continue only after npm run dev is terminated
     echo "✅ npm development server has been stopped.\n\n";
